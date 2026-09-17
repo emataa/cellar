@@ -6,7 +6,7 @@ let an attacker reconstruct the generator state.
 
 import secrets
 
-from pwmanager.constants import (
+from cellar.constants import (
     DEFAULT_GENERATED_PASSWORD_LENGTH,
     DIGITS,
     LOWERCASE_LETTERS,

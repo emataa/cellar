@@ -41,44 +41,6 @@ install-dev:
 
 
 # =============================================================================
-# Testing & quality
-# =============================================================================
-
-[group('test')]
-test:
-    @echo "Running tests..."
-    uv run pytest
-
-[group('test')]
-test-cov:
-    @echo "Running tests with coverage..."
-    uv run pytest --cov=pwmanager --cov-report=term-missing
-
-[group('test')]
-lint:
-    @echo "=== Ruff ==="
-    uv run ruff check src tests
-    @echo ""
-    @echo "=== Pylint ==="
-    uv run pylint src/pwmanager
-    @echo ""
-    @echo "=== Mypy ==="
-    uv run mypy src/pwmanager
-    @echo ""
-    @echo "✓ All linters passed"
-
-[group('test')]
-format:
-    @echo "Formatting code with yapf..."
-    uv run yapf -i -r src tests
-    @echo "✓ Code formatted"
-
-[group('test')]
-fix:
-    uv run ruff check src tests --fix
-
-
-# =============================================================================
 # Run the CLI
 # =============================================================================
 

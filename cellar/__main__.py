@@ -1,4 +1,4 @@
-from pwmanager.main import app
+from cellar.main import app
 
 if __name__ == "__main__":
     app()

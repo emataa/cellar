@@ -14,7 +14,7 @@ from argon2.low_level import Type, hash_secret_raw
 from cryptography.exceptions import InvalidTag
 from cryptography.hazmat.primitives.ciphers.aead import AESGCM
 
-from pwmanager.constants import (
+from cellar.constants import (
     ARGON2_MEMORY_KIB,
     ARGON2_PARALLELISM,
     ARGON2_TIME_COST,

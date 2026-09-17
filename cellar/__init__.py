@@ -1,15 +1,15 @@
 """
 Package init — re-exports public API so callers can do
-`from pwmanager import UnlockedVault` instead of reaching into
-pwmanager.vault directly.
+`from cellar import UnlockedVault` instead of reaching into
+cellar.vault directly.
 """
 
-from pwmanager.crypto import (
+from cellar.crypto import (
     CryptoError,
     KdfParameters,
     WrongPasswordError,
 )
-from pwmanager.vault import (
+from cellar.vault import (
     Entry,
     EntryAlreadyExistsError,
     EntryNotFoundError,

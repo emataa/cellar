@@ -1,4 +1,4 @@
-# pwmanager
+# cellar
 
 A CLI password manager that encrypts your passwords with Argon2id (key derivation) + AES-256-GCM (authenticated encryption). No cloud or no browser extension required.
 
@@ -31,7 +31,7 @@ The random values used during encryption (the salt for Argon2id, the nonce for A
 
 ```bash
 git clone
-cd pwmanager
+cd cellar
 ./install.sh
 ```
 

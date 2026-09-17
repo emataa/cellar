@@ -34,7 +34,7 @@ from pathlib import Path
 from types import TracebackType
 from typing import Any, Self
 
-from pwmanager.constants import (
+from cellar.constants import (
     ARGON2_MEMORY_KIB_PER_LANE_MIN,
     ARGON2_PARALLELISM_MIN,
     ARGON2_TIME_COST_MIN,
@@ -55,7 +55,7 @@ from pwmanager.constants import (
     VAULT_KEY_KDF,
     VAULT_KEY_VERSION,
 )
-from pwmanager.crypto import (
+from cellar.crypto import (
     KdfParameters,
     decrypt,
     derive_key,

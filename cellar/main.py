@@ -17,7 +17,7 @@ from rich.console import Console
 from rich.panel import Panel
 from rich.table import Table
 
-from pwmanager.constants import (
+from cellar.constants import (
     DEFAULT_GENERATED_PASSWORD_LENGTH,
     DEFAULT_VAULT_PATH,
     MINIMUM_MASTER_PASSWORD_LENGTH,
@@ -41,12 +41,12 @@ from pwmanager.constants import (
     PROMPT_MASTER_PASSWORD_CONFIRM,
     PROMPT_MASTER_PASSWORD_NEW,
 )
-from pwmanager.crypto import WrongPasswordError
-from pwmanager.generator import (
+from cellar.crypto import WrongPasswordError
+from cellar.generator import (
     PasswordTooShortError,
     generate_password,
 )
-from pwmanager.vault import (
+from cellar.vault import (
     Entry,
     EntryAlreadyExistsError,
     EntryNotFoundError,
