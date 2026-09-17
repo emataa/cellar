@@ -5,17 +5,17 @@ A CLI password manager that encrypts your passworcs with Argon2id (key derivatio
 ## How it works
 
 - Your master password is never stored. It's run through Argon2id with a random salt to derive a 32-byte AES key.
-- That key encrypts a JSON blob of your entries (username, password, url, notes) with AES-256-GCM, which also detects tampering. If the vault file is modified, decryption fails loudly instead of silently returning garbage.
+- That key encrypts a JSON blob of your entries (username, password, url, notes) with AES-256-GCM, which also detects tampering. If the vault file is modified, decryption fails with an authentication error instead of returning corrupted data.
 - Saves are atomic (write to a temp file, fsync, rename) and durable, so a crash mid-write can't corrupt the vault. A file lock stops two `pv` processes from racing on the same vault.
 - Vault lives at `~/.password-vault/vault.json` by default, mode `0600` (owner read/write only).
 
 ## Why Argon2id + AES-256-GCM
 
-**Argon2id** turns your master password into the encryption key. Passwords alone are short and guessable — anyone who stole the vault file could try millions of common passwords per second. Argon2id slows that down on purpose: deriving the key costs real time and memory (64 MiB). You pay that cost once, when unlocking. An attacker pays it for every single guess, which makes brute-forcing impractical.
+**Argon2id** is a memory-hard key derivation function that won the 2015 Password Hashing Competition. It turns the master password into the encryption key. On its own, a password is short enough that an attacker who steals the vault file could try millions of guesses per second against it. Argon2id makes each guess cost real time and memory (64 MiB), which is what makes brute-forcing impractical.
 
-**AES-256-GCM** does the encrypting. Besides scrambling the data so it's unreadable without the key, it seals the file so any tampering is detectable. Edit the encrypted file, even one byte, and it refuses to decrypt instead of producing corrupted or misleading data.
+**AES-256-GCM** is AES with a 256-bit key, run in a mode that both encrypts and authenticates the data. Besides making the data unreadable without the key, it detects tampering: modifying even one byte of the encrypted file makes decryption fail.
 
-The random values used during encryption (the salt for Argon2id, the nonce for AES-GCM) are stored alongside the encrypted data in the vault file. That's normal — they're not secret on their own, they just need to be unique.
+The random values used during encryption (the salt for Argon2id, the nonce for AES-GCM) are stored alongside the encrypted data in the vault file. They aren't secret on their own; they still need to be unique.
 
 ## Requirements
 
@@ -26,7 +26,7 @@ The random values used during encryption (the salt for Argon2id, the nonce for A
 ## Install
 
 ```bash
-git clone <repo-url>
+git clone
 cd pwmanager
 ./install.sh
 ```
@@ -74,9 +74,6 @@ PASSWORD=$(just run -- gen 24)
 ## Development
 
 ```bash
-just test         # run the test suite
-just test-cov      # with coverage report
-just lint          # ruff + pylint + mypy
 just format        # auto-format with yapf
 just fix           # auto-fix what ruff can
 just clean         # remove venv and build/cache artifacts
@@ -101,4 +98,8 @@ pwmanager/
 
 - Master password minimum length: 8 characters, enforced on `init` and `change-password`.
 - KDF parameters (Argon2id time/memory/parallelism cost) are stored per-vault, so upgrading the defaults later doesn't break old vaults.
-- `change-password` re-encrypts the entire vault under a fresh salt and key, not just a password check.
+- `change-password` re-encrypts the entire vault under a fresh salt and key.
+
+## Future plans
+
+- GUI client for the vault
