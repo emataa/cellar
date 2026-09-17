@@ -1,6 +1,10 @@
 # pwmanager
 
-A CLI password manager that encrypts your passworcs with Argon2id (key derivation) + AES-256-GCM (authenticated encryption). No cloud or no browser extension required.
+A CLI password manager that encrypts your passwords with Argon2id (key derivation) + AES-256-GCM (authenticated encryption). No cloud or no browser extension required.
+
+## Disclaimer
+
+This is a personal project that still may have security flaws. Don't use it for anything commercial or to store credentials you can't afford to lose. Consider using other well-documented password managers such as 1password.
 
 ## How it works
 
