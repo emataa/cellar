@@ -48,17 +48,17 @@ just setup
 All commands go through `just run --`, or directly via `pv` once the venv is activated.
 
 ```bash
-just run -- init                          # create a new vault
-just run -- add github                    # add an entry (prompts for fields)
-just run -- add github --generate         # add with a generated password
-just run -- get github                    # show an entry
-just run -- list                          # list all entry names
-just run -- delete github                 # remove an entry
-just run -- change-password               # rotate the master password
-just run -- gen 32                        # print a random password (no vault touched)
+just run -- init                            # create a new vault
+just run -- add your_entry                  # add an entry (prompts for fields)
+just run -- add your_entry --generate       # add with a generated password
+just run -- get your_entry                  # show an entry
+just run -- list                            # list all entry names
+just run -- delete your_entry               # remove an entry
+just run -- change-password                 # rotate the master password
+just run -- gen 32                          # print a random password (no vault touched)
 ```
 
-Every command that touches the vault prompts for your master password interactively — never as a CLI flag, since that would leak into shell history and `ps`.
+Every command that touches the vault prompts for your master password interactively, never as a CLI flag since that would leak into shell history and `ps`.
 
 By default the vault path is `~/.password-vault/vault.json`. Override with `--vault <path>` or the `PV_VAULT` environment variable.
 
@@ -73,29 +73,6 @@ just run -- gen 32 --no-symbols
 
 # Pipe a generated password elsewhere
 PASSWORD=$(just run -- gen 24)
-```
-
-## Development
-
-```bash
-just format        # auto-format with yapf
-just fix           # auto-fix what ruff can
-just clean         # remove venv and build/cache artifacts
-```
-
-## Project layout
-
-```
-pwmanager/
-├── pwmanager/          # package
-│   ├── main.py         # CLI commands (Typer)
-│   ├── vault.py        # vault file format, atomic writes, entry CRUD
-│   ├── crypto.py        # Argon2id + AES-256-GCM
-│   ├── generator.py     # random password generation
-│   └── constants.py     # config, prompts, messages
-├── pyproject.toml
-├── justfile
-└── install.sh
 ```
 
 ## Security notes
