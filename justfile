@@ -29,7 +29,6 @@ setup:
     @echo ""
     @echo "Try it out:"
     @echo "  just run -- --help"
-    @echo "  just test"
 
 [group('setup')]
 install:
@@ -96,17 +95,3 @@ update:
     uv sync --all-extras
 
 
-# =============================================================================
-# CI
-# =============================================================================
-
-# Full pipeline for first-time runs
-[group('ci')]
-all: setup lint test
-    @echo ""
-    @echo "✓ Setup, lint, and tests all passed"
-
-# What CI runs once deps are already installed
-[group('ci')]
-ci: lint test
-    @echo "✓ CI checks passed"
