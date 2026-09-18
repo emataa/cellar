@@ -16,6 +16,7 @@ import typer
 from rich.console import Console
 from rich.panel import Panel
 from rich.table import Table
+from typer.core import TyperGroup
 
 from cellar.constants import (
     DEFAULT_GENERATED_PASSWORD_LENGTH,
@@ -57,12 +58,27 @@ from cellar.vault import (
     VaultNotFoundError,
 )
 
+BANNER = r"""   __    ___  _      _       ____  ____  
+  /  ]  /  _]| |    | |     /    ||    \ 
+ /  /  /  [_ | |    | |    |  o  ||  D  )
+/  /  |    _]| |___ | |___ |     ||    / 
+\   \_ |   [_ |     ||     ||  _  ||    \ 
+ \    ||     ||     ||     ||  |  ||  .  \
+  \___||_____||_____||_____||__|__||__|\_|
+"""
+
+
+class BannerGroup(TyperGroup):
+    def format_help(self, ctx, formatter):
+        print(BANNER)
+        super().format_help(ctx, formatter)
 
 app = typer.Typer(
     name="pv",
-    help="Encrypted password manager (Argon2id + AES-256-GCM)",
+    help="cellar: Encrypted password manager (Argon2id + AES-256-GCM)",
     no_args_is_help=True,
     add_completion=False,
+    cls=BannerGroup,
 )
 console = Console()
 error_console = Console(stderr=True)  # errors/diagnostics -> stderr, keeps pipes clean
